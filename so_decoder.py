@@ -35,6 +35,8 @@ def parse_json_line(output, data):
             "visState",
             "optionsJSON",
             "panelsJSON",
+            "mapStateJSON",
+            "layerListJSON",
             {"kibanaSavedObjectMeta": ["searchSourceJSON"]},
         ]
     }
