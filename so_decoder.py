@@ -43,7 +43,7 @@ def parse_json_line(output, data):
 
     output[data_type][data_id] = {
         'title': data['attributes']['title'],
-        'data': decode_json(data, attributes_to_decode)
+        'data': data
     }
 
 
