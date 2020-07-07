@@ -28,6 +28,8 @@ def decode_json(saved_obj, to_decode):
 def parse_json_line(output, data):
     data_id = data['id']
     data_type = data['type']
+    if data_type == 'index-pattern':
+        data_type = 'index_pattern'
     
     attributes_to_decode = {
         "attributes": [
@@ -50,9 +52,8 @@ def parse_json_line(output, data):
 def main():
     args = parse_args()
     output = {}
-    dirs_to_make = ['index-pattern', 'visualization', 'dashboard', 'search', 'map']
+    dirs_to_make = ['index_pattern', 'visualization', 'dashboard', 'search', 'map']
     for name in dirs_to_make:
-        os.makedirs(os.path.join(args.out, name), exist_ok=True)
         output.setdefault(name, {})
 
     with open(args.file, 'r') as f:
@@ -64,6 +65,8 @@ def main():
             parse_json_line(output, data)
 
     for vis_type, ids in output.items():
+        if len(ids) != 0:
+            os.makedirs(os.path.join(args.out, vis_type), exist_ok=True)
         for vis_id, vis_info in ids.items():
             name = vis_id
             with open(os.path.join(args.out, vis_type, '{}.json'.format(name)), 'w') as write_file:
